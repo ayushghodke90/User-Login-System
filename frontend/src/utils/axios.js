@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+const BACKEND_URL = 'https://user-login-backend-duu3.onrender.com';
+
 // Log the environment variable for debugging
-console.log('API URL:', process.env.REACT_APP_API_URL);
+console.log('API URL:', BACKEND_URL);
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://user-login-backend-duu3.onrender.com',
+  baseURL: `${BACKEND_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
