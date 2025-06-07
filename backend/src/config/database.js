@@ -3,6 +3,11 @@ require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+if (!process.env.DATABASE_URL) {
+    console.error('DATABASE_URL is not defined in environment variables');
+    process.exit(1);
+}
+
 // Use the full DATABASE_URL if provided, otherwise use individual parameters
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
