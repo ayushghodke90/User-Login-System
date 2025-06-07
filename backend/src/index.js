@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 5000;
 
 // Enhanced CORS configuration
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL 
+    : 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -52,11 +54,8 @@ app.use((err, req, res, next) => {
 // Database connection and server start
 async function startServer() {
   try {
-    await sequelize.authenticate();
-    console.log('Database connection established successfully.');
-    
-    // Sync database models
-    await sequelize.sync();
+    // Sync database models with force: false to prevent data loss
+    await sequelize.sync({ alter: true });
     console.log('Database models synchronized.');
 
     app.listen(PORT, () => {

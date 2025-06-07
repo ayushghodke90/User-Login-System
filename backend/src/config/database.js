@@ -34,7 +34,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     }
 });
 
-// Test the connection
+// Test the connection and create schema if it doesn't exist
 const testConnection = async () => {
     try {
         await sequelize.authenticate();
@@ -46,6 +46,12 @@ const testConnection = async () => {
             console.log('Database:', dbUrl.pathname.substring(1));
             console.log('Host:', dbUrl.hostname);
         }
+
+        // Create schema if it doesn't exist
+        const schemaName = process.env.DB_SCHEMA || 'user_login_system';
+        await sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}";`);
+        console.log(`Schema "${schemaName}" is ready.`);
+
     } catch (error) {
         console.error('Unable to connect to the database:', error);
         if (error.original) {
