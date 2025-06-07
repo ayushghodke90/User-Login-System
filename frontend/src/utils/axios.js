@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://user-login-backend-duu3.onrender.com/api',
+  baseURL: 'https://user-login-backend-duu3.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   },
-  // Add timeout to prevent hanging requests
+  withCredentials: false, // Set to false since we're using token-based auth
   timeout: 10000
 });
 

@@ -22,12 +22,7 @@ const Register = () => {
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
+  const [fieldErrors, setFieldErrors] = useState({});
   const [generalError, setGeneralError] = useState('');
 
   const handleChange = (e) => {
@@ -91,6 +86,7 @@ const Register = () => {
 
     setLoading(true);
     try {
+      console.log('Submitting registration form:', formData);
       const success = await register(
         formData.username,
         formData.email,
@@ -128,9 +124,9 @@ const Register = () => {
           Register
         </Typography>
 
-        {(error || generalError) && (
+        {generalError && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {error || generalError}
+            {generalError}
           </Alert>
         )}
 
@@ -143,10 +139,9 @@ const Register = () => {
             onChange={handleChange}
             margin="normal"
             required
-            autoComplete="username"
-            disabled={loading}
             error={!!fieldErrors.username}
             helperText={fieldErrors.username}
+            disabled={loading}
           />
 
           <TextField
@@ -158,10 +153,9 @@ const Register = () => {
             onChange={handleChange}
             margin="normal"
             required
-            autoComplete="email"
-            disabled={loading}
             error={!!fieldErrors.email}
             helperText={fieldErrors.email}
+            disabled={loading}
           />
 
           <TextField
@@ -173,10 +167,9 @@ const Register = () => {
             onChange={handleChange}
             margin="normal"
             required
-            autoComplete="new-password"
-            disabled={loading}
             error={!!fieldErrors.password}
             helperText={fieldErrors.password}
+            disabled={loading}
           />
 
           <TextField
@@ -188,10 +181,9 @@ const Register = () => {
             onChange={handleChange}
             margin="normal"
             required
-            autoComplete="new-password"
-            disabled={loading}
             error={!!fieldErrors.confirmPassword}
             helperText={fieldErrors.confirmPassword}
+            disabled={loading}
           />
 
           <Button
