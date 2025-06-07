@@ -4,7 +4,7 @@ import axios from 'axios';
 console.log('API URL:', process.env.REACT_APP_API_URL);
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://user-login-backend-duu3.onrender.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://user-login-backend-duu3.onrender.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
