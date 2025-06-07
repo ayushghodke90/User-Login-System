@@ -1,9 +1,13 @@
 import axios from 'axios';
 
+// Log the environment variable for debugging
+console.log('API URL:', process.env.REACT_APP_API_URL);
+
 const api = axios.create({
-  baseURL: 'https://user-login-backend-duu3.onrender.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://user-login-backend-duu3.onrender.com/api',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   },
   withCredentials: false, // Set to false since we're using token-based auth
   timeout: 10000
@@ -12,10 +16,13 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    console.log('API Request:', {
+    // Log the full URL being called
+    console.log('Making request to:', config.baseURL + config.url);
+    console.log('Request config:', {
       method: config.method,
       url: config.url,
-      data: config.data
+      data: config.data,
+      headers: config.headers
     });
     
     const token = localStorage.getItem('token');
@@ -43,7 +50,12 @@ api.interceptors.response.use(
     console.error('API Error:', {
       status: error.response?.status,
       data: error.response?.data,
-      message: error.message
+      message: error.message,
+      config: {
+        url: error.config?.url,
+        baseURL: error.config?.baseURL,
+        method: error.config?.method
+      }
     });
 
     // Handle specific error cases
